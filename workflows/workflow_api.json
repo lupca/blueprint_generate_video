@@ -1,0 +1,260 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "flux1-schnell-Q4_K_S.gguf"
+    },
+    "class_type": "UnetLoaderGGUF"
+  },
+  "2": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader"
+  },
+  "3": {
+    "inputs": {
+      "vae_name": "flux_vae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "4": {
+    "inputs": {
+      "width": 768,
+      "height": 512,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage"
+  },
+  "6": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "7": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "8": {
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "seed": 42,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "4",
+        0
+      ],
+      "denoise": 1.0
+    },
+    "class_type": "KSampler"
+  },
+  "9": {
+    "inputs": {
+      "samples": [
+        "8",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode"
+  },
+  "10": {
+    "inputs": {
+      "unet_name": "ltx-video-2b-v0.9-Q4_K_S.gguf"
+    },
+    "class_type": "UnetLoaderGGUF"
+  },
+  "11": {
+    "inputs": {
+      "clip_name": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "ltxv"
+    },
+    "class_type": "CLIPLoader"
+  },
+  "12": {
+    "inputs": {
+      "vae_name": "ltx_video_vae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "22": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "14": {
+    "inputs": {
+      "text": "low quality, worst quality, deformed, distorted, disfigured, motion smear, motion artifacts, fused fingers, bad anatomy, weird hand, ugly",
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode"
+  },
+  "15": {
+    "inputs": {
+      "positive": [
+        "22",
+        0
+      ],
+      "negative": [
+        "14",
+        0
+      ],
+      "vae": [
+        "12",
+        0
+      ],
+      "image": [
+        "9",
+        0
+      ],
+      "width": 768,
+      "height": 512,
+      "length": 121,
+      "batch_size": 1,
+      "crf": 29,
+      "blur_radius": 0,
+      "interpolation": "lanczos",
+      "crop": "disabled",
+      "strength": 0.9
+    },
+    "class_type": "LTXVImgToVideoAdvanced"
+  },
+  "16": {
+    "inputs": {
+      "positive": [
+        "15",
+        0
+      ],
+      "negative": [
+        "15",
+        1
+      ],
+      "frame_rate": 24.0
+    },
+    "class_type": "LTXVConditioning"
+  },
+  "17": {
+    "inputs": {
+      "steps": 8,
+      "max_shift": 2.05,
+      "base_shift": 0.95,
+      "stretch": true,
+      "terminal": 0.1,
+      "latent": [
+        "15",
+        2
+      ]
+    },
+    "class_type": "LTXVScheduler"
+  },
+  "18": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect"
+  },
+  "19": {
+    "inputs": {
+      "model": [
+        "10",
+        0
+      ],
+      "add_noise": true,
+      "noise_seed": 42,
+      "cfg": 3.0,
+      "positive": [
+        "16",
+        0
+      ],
+      "negative": [
+        "16",
+        1
+      ],
+      "sampler": [
+        "18",
+        0
+      ],
+      "sigmas": [
+        "17",
+        0
+      ],
+      "latent_image": [
+        "15",
+        2
+      ]
+    },
+    "class_type": "SamplerCustom"
+  },
+  "20": {
+    "inputs": {
+      "vae": [
+        "12",
+        0
+      ],
+      "latents": [
+        "19",
+        0
+      ],
+      "spatial_tiles": 4,
+      "spatial_overlap": 1,
+      "temporal_tile_length": 16,
+      "temporal_overlap": 1,
+      "last_frame_fix": false,
+      "working_device": "auto",
+      "working_dtype": "auto"
+    },
+    "class_type": "LTXVSpatioTemporalTiledVAEDecode"
+  },
+  "21": {
+    "inputs": {
+      "images": [
+        "20",
+        0
+      ],
+      "frame_rate": 24.0,
+      "loop_count": 0,
+      "filename_prefix": "commercial_part",
+      "format": "video/h264-mp4",
+      "pingpong": false,
+      "save_output": true
+    },
+    "class_type": "VHS_VideoCombine"
+  }
+}
