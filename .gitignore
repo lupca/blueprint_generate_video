@@ -9,6 +9,7 @@
 !workflow_api.json
 !convert_vae_to_comfy.py
 !README.md
+!API_DOCUMENTATION.md
 !.gitignore
 
 # Explicitly ignore common temporary/system paths that might match directory rules
