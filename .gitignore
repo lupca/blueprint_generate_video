@@ -1,18 +1,23 @@
 # Ignore everything by default
 *
 
-# Allow directories so git can search for whitelist files inside them
+# Allow directories
 !*/
 
-# Whitelist project code and docs
-!generate_video.py
-!workflow_api.json
-!convert_vae_to_comfy.py
+# Whitelist project structure
+!scripts/
+!workflows/
+!tools/
+!tests/
+!patches/
 !README.md
 !API_DOCUMENTATION.md
 !.gitignore
 
-# Explicitly ignore common temporary/system paths that might match directory rules
+# Ignore specific patterns within whitelisted directories if needed
+# (Currently everything in these folders is considered important by the user)
+
+# Global ignores
 .cache/
 .local/
 .gemini/
@@ -24,3 +29,5 @@ ComfyUI/
 *.gif
 inputs.txt
 *.log
+*.bak
+__pycache__/
