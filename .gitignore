@@ -6,16 +6,18 @@
 
 # Whitelist project structure
 !scripts/
+!scripts/**
 !workflows/
+!workflows/**
 !tools/
+!tools/**
 !tests/
+!tests/**
 !patches/
+!patches/**
 !README.md
 !API_DOCUMENTATION.md
 !.gitignore
-
-# Ignore specific patterns within whitelisted directories if needed
-# (Currently everything in these folders is considered important by the user)
 
 # Global ignores
 .cache/
