@@ -88,7 +88,11 @@ def generate_segment(workflow, flux_prompt, ltx_prompt, output_name):
     return None
 
 def free_memory():
-    req = urllib.request.Request('http://{}/free'.format(server_address), data=b'')
+    req = urllib.request.Request(
+        'http://{}/free'.format(server_address), 
+        data=b'{}', 
+        headers={'Content-Type': 'application/json'}
+    )
     try:
         with urllib.request.urlopen(req) as response:
             response.read()
