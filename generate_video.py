@@ -87,6 +87,15 @@ def generate_segment(workflow, flux_prompt, ltx_prompt, output_name):
             return output_name
     return None
 
+def free_memory():
+    req = urllib.request.Request('http://{}/free'.format(server_address), data=b'')
+    try:
+        with urllib.request.urlopen(req) as response:
+            response.read()
+        print("VRAM and model cache cleared from GPU successfully.")
+    except Exception as e:
+        print(f"Warning: Failed to free VRAM: {e}")
+
 def main():
     workflow_path = os.path.join(base_dir, 'workflow_api.json')
     with open(workflow_path, 'r') as f:
@@ -103,6 +112,9 @@ def main():
         res = generate_segment(workflow, flux_p, ltx_p, out_n)
         if res:
             results.append(res)
+    
+    # Force unload models to free GPU memory
+    free_memory()
     
     if len(results) == 3:
         input_path = os.path.join(base_dir, 'inputs.txt')
