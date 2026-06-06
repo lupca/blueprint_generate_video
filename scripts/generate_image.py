@@ -7,9 +7,9 @@ import os
 import argparse
 import time
 
-server_address = '127.0.0.1:8188'
+server_address = '172.22.32.1:8188'
 client_id = str(uuid.uuid4())
-base_dir = '/root'
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def queue_prompt(prompt):
     p = {'prompt': prompt, 'client_id': client_id}
@@ -42,7 +42,7 @@ def main():
     parser.add_argument("--output", type=str, default="flux_output.png", help="Filename/path to save the generated image")
     args = parser.parse_args()
 
-    workflow_path = os.path.join(base_dir, 'workflow_flux_api.json')
+    workflow_path = os.path.join(base_dir, 'workflows/workflow_flux_api.json')
     if not os.path.exists(workflow_path):
         print(f"Error: {workflow_path} not found.")
         return
