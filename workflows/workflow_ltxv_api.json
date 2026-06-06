@@ -165,7 +165,7 @@
   "13": {
     "inputs": {
       "images": [
-        "12",
+        "16",
         0
       ],
       "frame_rate": 24.0,
@@ -176,5 +176,36 @@
       "save_output": true
     },
     "class_type": "VHS_VideoCombine"
+  },
+  "15": {
+    "inputs": {
+      "upscale_method": "bicubic",
+      "width": 1620,
+      "height": 1080,
+      "crop": "disabled",
+      "image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "ImageScale"
+  },
+  "16": {
+    "inputs": {
+      "ckpt_name": "rife47.pth",
+      "clear_cache_after_n_frames": 10,
+      "multiplier": 2,
+      "fast_mode": true,
+      "ensemble": true,
+      "scale_factor": 1.0,
+      "frames": [
+        "15",
+        0
+      ],
+      "torch_compile": false,
+      "batch_size": 1,
+      "dtype": "float16"
+    },
+    "class_type": "RIFE VFI"
   }
 }
