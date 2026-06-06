@@ -1,23 +1,4 @@
 # Ignore everything by default
-*
-
-# Allow directories
-!*/
-
-# Whitelist project structure
-!scripts/
-!scripts/**
-!workflows/
-!workflows/**
-!tools/
-!tools/**
-!tests/
-!tests/**
-!patches/
-!patches/**
-!README.md
-!API_DOCUMENTATION.md
-!.gitignore
 
 # Global ignores
 .cache/
