@@ -99,3 +99,11 @@ Sinh chuyển động dài 15 giây lấy ảnh `tiger_keyframe.png` (đã gen t
 2.  **Kế thừa Tự Động**: Tải khung hình cuối này lên server ComfyUI làm ảnh dẫn đường (I2V) cho phân đoạn tiếp theo.
 3.  **Khâu Nhị Phân Ngoài GPU**: FFmpeg Demuxer tự động khâu nối các phân đoạn nhị phân (`part1.mp4`, `part2.mp4`...) thành một video đồng nhất chỉ trong **0.1 giây**, không làm nặng bộ nhớ GPU và giữ nguyên chất lượng gốc.
 4.  **Giải phóng GPU tự động**: Sau khi hoàn tất tất cả các phân đoạn, API tự động gọi lệnh `/free` để ép giải phóng toàn bộ VRAM bộ nhớ đồ họa.
+
+---
+
+## 5. Docker & Walkthrough (Tối ưu hóa VRAM 16GB)
+
+Hệ thống đã được cấu hình chạy Docker trên Linux và tối ưu hóa cho card RTX 4060 Ti 16GB (sử dụng GGUF Q8 base model, Float32 VAE precision để tránh lỗi tràn số sinh màu neon).
+
+Xem hướng dẫn chi tiết tại đây: [Walkthrough: ComfyUI Server Deployment and Client Integration](docs/walkthrough.md)
