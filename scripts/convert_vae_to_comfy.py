@@ -2,8 +2,8 @@ import torch
 from safetensors.torch import load_file, save_file
 import os
 
-src_path = os.path.expanduser('/mnt/d/ComfyUI-Shared/models/vae/ltx_video_vae.safetensors.bak')
-dst_path = os.path.expanduser('/mnt/d/ComfyUI-Shared/models/vae/ltx_video_vae.safetensors')
+src_path = os.path.expanduser('/data/comfyui/models/vae/ltx_video_vae.safetensors.bak')
+dst_path = os.path.expanduser('/data/comfyui/models/vae/ltx_video_vae.safetensors')
 
 sd = load_file(src_path)
 new_sd = {}
